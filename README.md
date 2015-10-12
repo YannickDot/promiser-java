@@ -2,6 +2,13 @@
 
 A lightweight implementation of [Promises/A+](https://promisesaplus.com) specification, inspiration taken from JavaScript.
 
+## Requirements
+
+This library is written using Java 8 syntax.
+To use this into Java 7, 6 and 5 projects, don't forget to install [retrolambda](https://github.com/orfjackal/retrolambda) by [@orfjackal](https://github.com/orfjackal)
+
+Let's embrace the future ! 😄
+
 ### Usage
 
 You can create a Promiser<T> object like this :
@@ -55,7 +62,7 @@ P.success((String result) -> {
 ```
 
 
-## Next steps
+## Next step
 
 * Make a Promiser instance "thenable" so we can have a `.then()` and `.catch()` callbacks and provide an asynchronous flow control using `.then()` like this :
 
