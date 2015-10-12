@@ -24,7 +24,7 @@ P.success((T result) -> {
 })
 ```
 
-The `reject` callback always resolves an error of type Object.
+The `reject` callback always handle an error of type Object.
 
 ### Example
 
@@ -52,4 +52,19 @@ P.success((String result) -> {
 .error((Object err) -> {
   // Handle failure here
 })
+```
+
+
+## Next steps
+
+* Make a Promiser instance "thenable" so we can have a `.then()` and `.catch()` callbacks and provide an asynchronous flow control using `.then()` like this :
+
+```java
+  P.then(...)
+  .then(...)
+  .then(...)
+  .then(...)
+  .then(...)
+  .catch(...)
+
 ```
