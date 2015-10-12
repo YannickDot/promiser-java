@@ -2,5 +2,5 @@ package promiserpkg;
 
 @FunctionalInterface
 public interface PromiseInitializer<T> {
-	public void run(YPSuccess<T> resolve, YPError reject);
+	public void run(Resolver<T> resolve, Rejecter reject);
 }

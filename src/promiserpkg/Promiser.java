@@ -3,8 +3,8 @@ package promiserpkg;
 public class Promiser<T> {
 	
 	public PromiseState state;
-	public YPSuccess<T> _success = null;
-	public YPError _error = null;
+	private Resolver<T> _success = null;
+	private Rejecter _error = null;
 	public PromiseInitializer<T> _init;
 	
 	T resolveResult;
@@ -16,13 +16,13 @@ public class Promiser<T> {
 		this.go();
 	}
 
-	public YPSuccess<T> resolve = (T res) -> {
+	public Resolver<T> resolve = (T res) -> {
 		state = PromiseState.FULFILLED;
 		resolveResult = res;
 		next();
 	};
 	
-	public YPError reject = (Object err) -> {
+	public Rejecter reject = (Object err) -> {
 		state = PromiseState.REJECTED;
 		rejectError = err;
 		next();
@@ -41,7 +41,7 @@ public class Promiser<T> {
 	}
 
 
-	public Promiser<T> success(YPSuccess<T> pSuccess) {
+	public Promiser<T> success(Resolver<T> pSuccess) {
 		this._success = pSuccess;
 		if(state == PromiseState.FULFILLED) {
 			this._success.run(resolveResult);
@@ -50,7 +50,7 @@ public class Promiser<T> {
 	}
 	
 	public Promiser<T> then(thenFunc<T> pThen) {
-		PromiseInitializer<T> c = (YPSuccess<T> resolve, YPError reject) -> {
+		PromiseInitializer<T> c = (Resolver<T> resolve, Rejecter reject) -> {
 			try {
 				resolve.run(pThen.run(resolveResult));
 			} catch  (Exception e) {
@@ -62,7 +62,7 @@ public class Promiser<T> {
 	}
 
 	
-	public Promiser<T> error(YPError pError) {
+	public Promiser<T> error(Rejecter pError) {
 		this._error = pError;
 		if(state == PromiseState.REJECTED) {
 			this._error.run(rejectError);

@@ -1,6 +1,6 @@
 package promiserpkg;
 
 @FunctionalInterface
-public interface YPError {
+public interface Rejecter {
 	public void run(Object o);
 }

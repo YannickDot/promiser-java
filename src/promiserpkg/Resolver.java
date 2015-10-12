@@ -1,6 +1,6 @@
 package promiserpkg;
 
 @FunctionalInterface
-public interface YPSuccess<U> {
+public interface Resolver<U> {
 	public void run(U t);
 }

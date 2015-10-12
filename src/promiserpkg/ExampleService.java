@@ -9,7 +9,7 @@ public class ExampleService {
 	
 	
 	public static Promiser<String> fakefetch(int ms) {
-		Promiser<String> req = new Promiser<String>((YPSuccess<String> resolve, YPError reject) -> {
+		Promiser<String> req = new Promiser<String>((Resolver<String> resolve, Rejecter reject) -> {
 			System.out.println("BEGIN");
 			
 			// Place your asynchronous process here, and make sure to trigger resolve.run() or reject.run() when needed.
