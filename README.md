@@ -59,21 +59,21 @@ Promiser<String, Integer> p = new Promiser<String, Integer>((Resolver<String> re
 Or using **Retrofit V2**
 
 ```java
- Promiser<String, Integer> p = new Promiser<>((Resolver<String> resolve, Rejecter<Integer> reject) ->
-    retrofit.getService(IUserService.class).fetchUsers().enqueue(new Callback<String>() {
-          @Override public void onResponse(Response<String> response) {
-            if(response.isSuccess())
-              resolve.run(response.body());
-            else
-              reject.run(response.code());
-          }
+Promiser<String, Integer> p = new Promiser<>((Resolver<String> resolve, Rejecter<Integer> reject) -> {
+  retrofit.getService(IUserService.class).fetchUsers().enqueue(new Callback<String>() {
+        @Override public void onResponse(Response<String> response) {
+          if(response.isSuccess())
+            resolve.run(response.body()); //resolving result
+          else
+            reject.run(response.code()); //rejecting error code
+        }
 ​
-          @Override public void onFailure(Throwable t)
-          {
-            reject.run(CodeError.Undefined.getCode());
-          }
-  }));
-}
+        @Override public void onFailure(Throwable t){
+          reject.run(CodeError.Undefined.getCode()); //reject error
+        }
+  });
+});
+
 ```
 
 Now we can handle the success or the error of this promise using the `.success()` and `.error()` callbacks :
