@@ -1,6 +1,6 @@
 package promiserpkg;
 
 @FunctionalInterface
-public interface Resolver<U> {
-	public void run(U t);
+public interface Resolver<T> {
+	public void run(T t);
 }

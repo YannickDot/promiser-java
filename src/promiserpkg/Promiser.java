@@ -1,16 +1,16 @@
 package promiserpkg;
 
-public class Promiser<T> {
+public class Promiser<T, U> {
 	
 	public PromiseState state;
 	private Resolver<T> _success = null;
-	private Rejecter _error = null;
-	public PromiseInitializer<T> _init;
+	private Rejecter<U> _error = null;
+	public PromiseInitializer<T, U> _init;
 	
 	T resolveResult;
-	Object rejectError;
+	U rejectError;
 	
-	public Promiser(PromiseInitializer<T> init) {
+	public Promiser(PromiseInitializer<T, U> init) {
 		this._init = init;
 		state = PromiseState.PENDING;
 		this.go();
@@ -22,7 +22,7 @@ public class Promiser<T> {
 		next();
 	};
 	
-	public Rejecter reject = (Object err) -> {
+	public Rejecter<U> reject = (U err) -> {
 		state = PromiseState.REJECTED;
 		rejectError = err;
 		next();
@@ -41,7 +41,7 @@ public class Promiser<T> {
 	}
 
 
-	public Promiser<T> success(Resolver<T> pSuccess) {
+	public Promiser<T, U> success(Resolver<T> pSuccess) {
 		this._success = pSuccess;
 		if(state == PromiseState.FULFILLED) {
 			this._success.run(resolveResult);
@@ -49,20 +49,20 @@ public class Promiser<T> {
 		return this;
 	}
 	
-	public Promiser<T> then(thenFunc<T> pThen) {
-		PromiseInitializer<T> c = (Resolver<T> resolve, Rejecter reject) -> {
-			try {
-				resolve.run(pThen.run(resolveResult));
-			} catch  (Exception e) {
-				reject.run(e);
-			}
-		}; 
-		Promiser<T> p = new Promiser<T>(c);
-		return p;
-	}
+//	public Promiser<V, Exception> then(thenFunc<V> pThen) {
+//		PromiseInitializer<T, Exception> c = (Resolver<V> resolve, Rejecter<Exception> reject) -> {
+//			try {
+//				resolve.run(pThen.run(resolveResult));
+//			} catch  (Exception e) {
+//				reject.run(e);
+//			}
+//		}; 
+//		Promiser<v, Exception> p = new Promiser<T, Exception>(c);
+//		return p;
+//	}
 
 	
-	public Promiser<T> error(Rejecter pError) {
+	public Promiser<T, U> error(Rejecter<U> pError) {
 		this._error = pError;
 		if(state == PromiseState.REJECTED) {
 			this._error.run(rejectError);
@@ -70,7 +70,7 @@ public class Promiser<T> {
 		return this;
 	}
 	
-	public Promiser<T> go() {
+	public Promiser<T, U> go() {
 		_init.run(this.resolve, this.reject);
 		return this;
 	}

@@ -8,8 +8,8 @@ public class ExampleService {
 	public static int offsetKudos = 0;	
 	
 	
-	public static Promiser<String> fakefetch(int ms) {
-		Promiser<String> req = new Promiser<String>((Resolver<String> resolve, Rejecter reject) -> {
+	public static Promiser<String, Integer> fakefetch(int ms) {
+		Promiser<String, Integer> req = new Promiser<String, Integer>((Resolver<String> resolve, Rejecter<Integer> reject) -> {
 			System.out.println("BEGIN");
 			
 			// Place your asynchronous process here, and make sure to trigger resolve.run() or reject.run() when needed.
