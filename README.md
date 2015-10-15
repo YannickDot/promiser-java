@@ -56,7 +56,7 @@ Promiser<String, Integer> p = new Promiser<String, Integer>((Resolver<String> re
 });
 ```
 
-Or using **Retrofit V2**
+<!-- Or using **Retrofit V2**
 
 ```java
 Promiser<String, Integer> p = new Promiser<>((Resolver<String> resolve, Rejecter<Integer> reject) -> {
@@ -75,6 +75,7 @@ Promiser<String, Integer> p = new Promiser<>((Resolver<String> resolve, Rejecter
 });
 
 ```
+-->
 
 Now we can handle the success or the error of this promise using the `.success()` and `.error()` callbacks :
 
